@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div class="login_banner">
+    <div id="content">
+        <div class="login_form">
+            <div class="login_box">
+                <div class="tit">
+                    <h1>用户登陆</h1>
+                    <a href="/pages/user/register.html">立即注册</a>
+                </div>
+                <div class="msg_cont">
+                    <b></b>
+                    <span class="errorMsg" id="msg">请输入用户名和密码</span>
+                </div>
+                <div class="form">
+                    <form action="/login" method="POST">
+                        <label>用户名称：</label>
+                        <input class="itxt" type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1" name="username"/>
+                        <br/>
+                        <br/>
+                        <label>用户密码：</label>
+                        <input class="itxt" type="password" placeholder="请输入密码" autocomplete="off" tabindex="1" name="password"/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <input type="submit" value="登录" id="sub_btn"/>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script>
+    $(function () {
+        //给登录按钮绑定单击事件
+        $("#sub_btn").click(function () {
+            var username = $("#username").val();
+            if (username == "") {
+                alert("用户名不能为空！");
+                return false;
+            }
+            var password = $("#password").val();
+            if (password == "") {
+                alert("密码不能为空！");
+                return false;
+            }
+        });
+        if ("{{.}}" == "用户名或密码不正确") {
+            $("#msg").text("用户名或密码不正确");
+        }
+    });
+</script>
+</html>

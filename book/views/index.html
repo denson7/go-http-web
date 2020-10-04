@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="header">
+    <span class="wel_word">测试Demo</span>
+    {{if .IsLogin}}
+        <div>
+            <span>欢迎<span class="um_span">{{.Username}}</span>光临书城</span>
+            <a href="/pages/cart/cart.html">购物车</a>
+            <a href="/logout">注销</a>&nbsp;&nbsp;
+            <a href="/">返回</a>
+        </div>
+    {{else}}
+        <div>
+            <a href="/pages/user/login.html">登录</a> |
+            <a href="/pages/user/register.html">注册</a>
+        </div>
+    {{end}}
+</div>
+<div>
+    {{range .Books}}
+        <div class="b_list">
+            <div class="img_div">
+                <img class="book_img" alt="" src="{{.ImgPath}}"/>
+            </div>
+            <div class="book_info">
+                <div class="book_name">
+                    <span class="sp1">书名:</span>
+                    <span class="sp2">{{.Title}}</span>
+                </div>
+                <div class="book_author">
+                    <span class="sp1">作者:</span>
+                    <span class="sp2">{{.Author}}</span>
+                </div>
+                <div class="book_price">
+                    <span class="sp1">价格:</span>
+                    <span class="sp2">￥{{.Price}}</span>
+                </div>
+                <div class="book_sales">
+                    <span class="sp1">销量:</span>
+                    <span class="sp2">{{.Sales}}</span>
+                </div>
+                <div class="book_amount">
+                    <span class="sp1">库存:</span>
+                    <span class="sp2">{{.Stock}}</span>
+                </div>
+            </div>
+        </div>
+    {{end}}
+</div>
+
+<div>
+    <div id="page_nav">
+        {{if .IsHasPrev}}
+            <a href="/getPageBooksByPrice?min={{.MinPrice}}&max={{.MaxPrice}}">首页</a>
+            <a href="/getPageBooksByPrice?pageNo={{.GetPrevPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">上一页</a>
+        {{end}}
+        当前是第{{.PageNo}}页，共{{.TotalPageNo}}页，共{{.TotalRecord}}条记录
+        {{if .IsHasNext}}
+            <a href="?pageNo={{.GetNextPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">下一页</a>
+            <a href="getPageBooksByPrice/?pageNo={{.TotalPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">末页</a>
+        {{end}}
+        到第<input value="{{.PageNo}}" name="pn" id="pn_input"/>页
+        <input type="button" value="确定" id="sub">
+    </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script>
+    $("#sub").click(function () {// 给确定按钮绑定单击事件
+        var pageNo = $("#pn_input").val();// 获取输入的页码
+        location = "/getPageBooksByPrice?pageNo=" + pageNo + "&min={{.MinPrice}}&max={{.MaxPrice}}"
+    });
+</script>
+</body>
+</html>
