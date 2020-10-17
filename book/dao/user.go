@@ -6,17 +6,18 @@ import (
 )
 
 func CheckUserNameAndPassword(username string, password string) (*model.User, error) {
-	sql := "SELECT id, username, password, email FROM users WHERE username = ? AND password = ?"
-	row := utils.Db.QueryRow(sql, username, password)
 	user := &model.User{}
+	sql := "SELECT id, username, password, email FROM users WHERE username = ? AND password = ?"
+	// 查询一行
+	row := utils.Db.QueryRow(sql, username, password)
 	row.Scan(&user.ID, &user.Username, &user.Password, &user.Email)
 	return user, nil
 }
 
 func CheckUserName(username string) (*model.User, error) {
+	user := &model.User{}
 	sql := "SELECT id, username, password, email FROM users WHERE username = ?"
 	row := utils.Db.QueryRow(sql, username)
-	user := &model.User{}
 	row.Scan(&user.ID, &user.Username, &user.Password, &user.Email)
 	return user, nil
 }
