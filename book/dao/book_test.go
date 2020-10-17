@@ -6,15 +6,19 @@ import (
 	"testing"
 )
 
-func testGetBooks(t *testing.T) {
+func TestMain(t *testing.M)  {
+	fmt.Println("测试book中的方法")
+	t.Run()
+}
+
+func TestGetBooks(t *testing.T) {
 	books, _ := GetBooks()
 	for k, v := range books {
 		fmt.Printf("第%v本书是%v", k, v)
 	}
 }
 
-
-func testAddBooks(t *testing.T) {
+func TestAddBooks(t *testing.T) {
 	book := &model.Book{
 		Title:   "三国演义",
 		Author:  "罗贯中",
@@ -26,7 +30,7 @@ func testAddBooks(t *testing.T) {
 	AddBook(book)
 }
 
-func testDeleteBook(t *testing.T) {
+func TestDeleteBook(t *testing.T) {
 	DeleteBook("17")
 }
 

@@ -1,25 +1,30 @@
 package dao
 
-import (
+import  (
 	"book/model"
 	"book/utils"
 	"fmt"
 	"strconv"
 )
-
+// 获取所有图书
 func GetBooks() ([]*model.Book, error) {
+	// sql
 	sql := "SELECT id, title, author, price, sales, stock, img_path FROM books"
+	// 执行
 	rows, err := utils.Db.Query(sql)
 	if err != nil {
 		return nil, err
 	}
+	// 定义一个切片
 	var books []*model.Book
+	// 遍历
 	for rows.Next() {
 		book := &model.Book{}
 		err2 := rows.Scan(&book.ID, &book.Title, &book.Author, &book.Price, &book.Sales, &book.Stock, &book.ImgPath)
 		if err2 != nil {
 			return nil, err2
 		}
+		// 将book添加到books中
 		books = append(books, book)
 	}
 	return books, nil
@@ -28,7 +33,7 @@ func GetBooks() ([]*model.Book, error) {
 // Add
 func AddBook(b *model.Book) error {
 	sql := "INSERT INTO books(title, author, price, sales, stock, img_path) VALUES (?, ?, ?, ?, ?, ?)"
-	_, err := utils.Db.Exec(sql, &b.Title, &b.Author, &b.Price, &b.Sales, &b.Stock, &b.ImgPath)
+	_, err := utils.Db.Exec(sql, b.Title, b.Author, b.Price, b.Sales, b.Stock, b.ImgPath)
 	if err != nil {
 		return err
 	}
